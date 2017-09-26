@@ -29,10 +29,10 @@ class Lead(BaseService, All, Find, FindAll, Delete, Save, Load, Convert):
 
     def convert(self, _id, _email):
         """convert a lead to a user"""
-        service_url = "/contacts/convert/%s" % _id #different service_url for conversion
+        service_url = "/contacts/convert/" #different service_url for conversion
         data = {
             'contact': {
-                'user_id' : _id,
+                'id' : _id,
              },
             'user': {
                 'email' : _email,
