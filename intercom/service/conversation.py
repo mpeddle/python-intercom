@@ -51,8 +51,9 @@ class Conversation(BaseService, Find, FindAll, Save, Load):
 
     def mark_read(self, _id):
         """Mark a conversation as read."""
+        service_url = "/%s/%s" % (self.collection, _id) #different service_url for mark_read
         data = {'read': True}
-        response = self.client.put(self.resource_url(_id), data)
+        response = self.client.put(service_url, data)
         return self.collection_class().from_response(response)
 
     def __reply(self, reply_data):

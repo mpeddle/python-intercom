@@ -18,6 +18,27 @@ class Lead(BaseService, All, Find, FindAll, Delete, Save, Load, Convert):
     """
 
     @property
+    def collection(self):
+        """Return the name of the collection."""
+        return utils.resource_class_to_collection_name(self.collection_class)
+
+    @property
     def collection_class(self):
         """The collection class that represents this resource."""
         return lead.Lead
+
+    def convert(self, _id, _email):
+        """convert a lead to a user"""
+        service_url = "/contacts/convert/%s" % _id #different service_url for conversion
+        data = {
+            'contact': {
+                'user_id' : _id,
+             },
+            'user': {
+                'email' : _email,
+            }
+        }
+        response = self.client.post(service_url, data)
+        return self.collection_class().from_response(response)
+
+
